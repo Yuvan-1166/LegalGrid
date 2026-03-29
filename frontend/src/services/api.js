@@ -31,6 +31,25 @@ export const analyzeContractFile = async (file, jurisdiction = 'All-India') => {
   return response.data
 }
 
+// Case Law Search
+export const searchCases = async (caseDescription, jurisdiction = 'All-India', topK = 5) => {
+  const response = await api.post('/api/v1/cases/search', {
+    case_description: caseDescription,
+    jurisdiction,
+    top_k: topK,
+  })
+  return response.data
+}
+
+export const analyzePrecedentStrength = async (caseDescription, jurisdiction = 'All-India', topK = 5) => {
+  const response = await api.post('/api/v1/cases/analyze-strength', {
+    case_description: caseDescription,
+    jurisdiction,
+    top_k: topK,
+  })
+  return response.data
+}
+
 // Qdrant Operations
 export const initializeQdrant = async () => {
   const response = await api.post('/api/v1/qdrant/initialize')
@@ -50,6 +69,43 @@ export const searchDocuments = async (query, collection, jurisdiction = 'All-Ind
 // Health Check
 export const healthCheck = async () => {
   const response = await api.get('/health')
+  return response.data
+}
+
+// Compliance Checking
+export const checkCompliance = async (orgProfile, regulations) => {
+  const response = await api.post('/api/v1/compliance/check', {
+    org_profile: orgProfile,
+    regulations,
+  })
+  return response.data
+}
+
+export const detectRegulatoryChanges = async (regulation, lastCheckDate = null) => {
+  const params = lastCheckDate ? { last_check_date: lastCheckDate } : {}
+  const response = await api.get(`/api/v1/compliance/detect-changes/${regulation}`, { params })
+  return response.data
+}
+
+// Dispute Mediation
+export const mediateDispute = async (parties, narrative, claims, jurisdiction = 'All-India') => {
+  const response = await api.post('/api/v1/disputes/mediate', {
+    dispute: {
+      parties,
+      narrative,
+      claims,
+      jurisdiction,
+    },
+  })
+  return response.data
+}
+
+export const evaluateOutcome = async (outcomeDescription, outcomeRationale, parsedClaims) => {
+  const response = await api.post('/api/v1/disputes/evaluate-outcome', {
+    outcome_description: outcomeDescription,
+    outcome_rationale: outcomeRationale,
+    parsed_claims: parsedClaims,
+  })
   return response.data
 }
 

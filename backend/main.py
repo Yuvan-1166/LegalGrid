@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.routes import qdrant, contracts
+from app.api.routes import qdrant, contracts, cases, compliance, disputes
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -22,6 +22,9 @@ app.add_middleware(
 # Include routers
 app.include_router(qdrant.router, prefix=settings.API_V1_PREFIX)
 app.include_router(contracts.router, prefix=settings.API_V1_PREFIX)
+app.include_router(cases.router, prefix=settings.API_V1_PREFIX)
+app.include_router(compliance.router, prefix=settings.API_V1_PREFIX)
+app.include_router(disputes.router, prefix=settings.API_V1_PREFIX)
 
 @app.get("/")
 def root():

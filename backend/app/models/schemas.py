@@ -60,25 +60,35 @@ class CaseLawSearchResponse(BaseModel):
 
 # Compliance Models
 class OrganizationProfile(BaseModel):
-    org_type: str
-    industry: str
-    size: str
-    jurisdiction: str
+    name: Optional[str] = "Organization"
+    type: str = Field(..., description="e.g., private_company, public_company, startup")
+    industry: str = Field(..., description="e.g., technology, manufacturing, finance")
+    size: str = Field(..., description="e.g., 1-50, 50-200, 200+ employees")
+    jurisdiction: str = Field(default="All-India")
 
 class ComplianceGap(BaseModel):
     regulation: str
     requirement: str
     status: str
+    severity: str = Field(default="medium", description="high, medium, or low")
     action_items: List[str]
+    deadline: str = Field(default="Not specified")
+    confidence: float = Field(default=0.5, ge=0.0, le=1.0)
+
+class ComplianceReport(BaseModel):
+    organization: str
+    compliance_score: float
+    total_checks: int
+    gaps: List[ComplianceGap]
+    compliant_count: int
+    checked_at: str
 
 class ComplianceCheckRequest(BaseModel):
     org_profile: OrganizationProfile
-    regulations: List[str]
+    regulations: List[str] = Field(..., description="List of regulations to check")
 
 class ComplianceCheckResponse(BaseModel):
-    org_profile: OrganizationProfile
-    gaps: List[ComplianceGap]
-    compliance_score: int
+    report: ComplianceReport
 
 # Dispute Mediation Models
 class DisputeDescription(BaseModel):

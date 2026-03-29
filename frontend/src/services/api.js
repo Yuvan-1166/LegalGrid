@@ -1,0 +1,56 @@
+import axios from 'axios'
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
+// Contract Analysis
+export const analyzeContract = async (contractText, jurisdiction = 'All-India') => {
+  const response = await api.post('/api/v1/contracts/analyze', {
+    contract_text: contractText,
+    jurisdiction,
+  })
+  return response.data
+}
+
+export const analyzeContractFile = async (file, jurisdiction = 'All-India') => {
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('jurisdiction', jurisdiction)
+  
+  const response = await api.post('/api/v1/contracts/analyze-file', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  return response.data
+}
+
+// Qdrant Operations
+export const initializeQdrant = async () => {
+  const response = await api.post('/api/v1/qdrant/initialize')
+  return response.data
+}
+
+export const searchDocuments = async (query, collection, jurisdiction = 'All-India', topK = 5) => {
+  const response = await api.post('/api/v1/qdrant/search', {
+    query,
+    collection,
+    jurisdiction,
+    top_k: topK,
+  })
+  return response.data
+}
+
+// Health Check
+export const healthCheck = async () => {
+  const response = await api.get('/health')
+  return response.data
+}
+
+export default api

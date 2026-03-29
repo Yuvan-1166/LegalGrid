@@ -1,0 +1,24 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class Settings:
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
+    QDRANT_URL: str = os.getenv("QDRANT_URL", "http://localhost:6333")
+    ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
+    DEBUG: bool = ENVIRONMENT == "development"
+    
+    # API Settings
+    API_V1_PREFIX: str = "/api/v1"
+    PROJECT_NAME: str = "Smart Legal System"
+    VERSION: str = "0.1.0"
+    
+    # CORS Settings
+    ALLOWED_ORIGINS: list = [
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://localhost:5174",
+    ]
+
+settings = Settings()

@@ -58,3 +58,4 @@ dist/
 htmlcov/
 *.md
 !README.md
+*.sh

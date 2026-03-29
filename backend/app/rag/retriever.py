@@ -94,13 +94,13 @@ class HybridRetriever:
             ]
         ) if jurisdiction != "All" else None
         
-        results = self.client.search(
+        results = self.client.query_points(
             collection_name=collection,
-            query_vector=query_embedding,
+            query=query_embedding,
             query_filter=search_filter,
             limit=top_k,
             with_payload=True
-        )
+        ).points
         
         # Format results
         formatted_results = []

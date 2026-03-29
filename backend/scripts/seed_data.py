@@ -2,7 +2,10 @@
 """Seed initial legal documents into Qdrant"""
 
 import sys
-sys.path.append('..')
+import os
+
+# Add parent directory to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.rag.retriever import retriever
 

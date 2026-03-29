@@ -7,7 +7,7 @@ class GroqClient:
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or settings.GROQ_API_KEY
         self.client = Groq(api_key=self.api_key)
-        self.model = "mixtral-8x7b-32768"
+        self.model = "openai/gpt-oss-120b"
     
     def chat(
         self,

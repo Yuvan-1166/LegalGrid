@@ -104,7 +104,7 @@ Frontend will be available at http://localhost:5173
 
 ### Backend
 - **Framework**: FastAPI
-- **LLM**: GROQ (mixtral-8x7b-32768)
+- **LLM**: GROQ (openai/gpt-oss-120b)
 - **Vector DB**: Qdrant
 - **Embeddings**: sentence-transformers (all-mpnet-base-v2)
 - **Agents**: LangChain

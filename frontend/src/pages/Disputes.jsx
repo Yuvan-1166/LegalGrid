@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Card from '../components/Card'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ErrorAlert from '../components/ErrorAlert'
+import Badge from '../components/Badge'
+import Tooltip from '../components/Tooltip'
 import { mediateDispute } from '../services/api'
 
 export default function Disputes() {

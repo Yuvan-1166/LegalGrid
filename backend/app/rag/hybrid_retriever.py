@@ -3,6 +3,7 @@
 from typing import List, Dict, Optional
 from app.rag.retriever import retriever
 from app.rag.bm25_search import bm25_searcher
+from app.core.cache import retrieval_cache
 import numpy as np
 
 class HybridRetriever:
@@ -18,6 +19,7 @@ class HybridRetriever:
         self.bm25_weight = bm25_weight
         self.semantic_retriever = retriever
         self.bm25_retriever = bm25_searcher
+        self.cache = retrieval_cache
     
     def reciprocal_rank_fusion(
         self,
@@ -95,10 +97,11 @@ class HybridRetriever:
         collection: str,
         jurisdiction: str = "All-India",
         top_k: int = 5,
-        use_hybrid: bool = True
+        use_hybrid: bool = True,
+        use_cache: bool = True
     ) -> List[Dict]:
         """
-        Retrieve documents using hybrid search
+        Retrieve documents using hybrid search with caching
         
         Args:
             query: Search query
@@ -106,42 +109,55 @@ class HybridRetriever:
             jurisdiction: Jurisdiction filter
             top_k: Number of results to return
             use_hybrid: If False, use only semantic search
+            use_cache: If True, use cached results when available
             
         Returns:
             List of retrieved documents with scores
         """
+        # Check cache first
+        if use_cache:
+            cached_results = self.cache.get(query, collection, jurisdiction, top_k)
+            if cached_results is not None:
+                return cached_results
+        
         if not use_hybrid:
             # Semantic only
-            return self.semantic_retriever.retrieve(
+            results = self.semantic_retriever.retrieve(
                 query=query,
                 collection=collection,
                 jurisdiction=jurisdiction,
                 top_k=top_k
             )
+        else:
+            # Get results from both retrievers
+            semantic_results = self.semantic_retriever.retrieve(
+                query=query,
+                collection=collection,
+                jurisdiction=jurisdiction,
+                top_k=top_k * 2  # Get more for fusion
+            )
+            
+            bm25_results = self.bm25_retriever.search(
+                query=query,
+                collection=collection,
+                jurisdiction=jurisdiction if jurisdiction != "All-India" else None,
+                top_k=top_k * 2
+            )
+            
+            # Fuse results
+            fused_results = self.reciprocal_rank_fusion(
+                semantic_results,
+                bm25_results
+            )
+            
+            # Return top-k
+            results = fused_results[:top_k]
         
-        # Get results from both retrievers
-        semantic_results = self.semantic_retriever.retrieve(
-            query=query,
-            collection=collection,
-            jurisdiction=jurisdiction,
-            top_k=top_k * 2  # Get more for fusion
-        )
+        # Cache results
+        if use_cache:
+            self.cache.set(query, collection, jurisdiction, top_k, results)
         
-        bm25_results = self.bm25_retriever.search(
-            query=query,
-            collection=collection,
-            jurisdiction=jurisdiction if jurisdiction != "All-India" else None,
-            top_k=top_k * 2
-        )
-        
-        # Fuse results
-        fused_results = self.reciprocal_rank_fusion(
-            semantic_results,
-            bm25_results
-        )
-        
-        # Return top-k
-        return fused_results[:top_k]
+        return results
     
     def explain_retrieval(self, doc: Dict) -> str:
         """Generate explanation for why document was retrieved"""

@@ -3,6 +3,9 @@ import { analyzeContract, analyzeContractFile } from '../services/api'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ErrorAlert from '../components/ErrorAlert'
 import Card from '../components/Card'
+import ProgressBar from '../components/ProgressBar'
+import Badge from '../components/Badge'
+import Tooltip from '../components/Tooltip'
 
 export default function ContractAnalysis() {
   const [contractText, setContractText] = useState('')
@@ -199,35 +202,37 @@ export default function ContractAnalysis() {
           <div className="space-y-6 animate-fade-in">
             {/* Overall Summary */}
             <Card>
-              <div className="flex items-start justify-between mb-4">
+              <div className="flex items-start justify-between mb-6">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">Analysis Summary</h2>
                   <p className="text-gray-600">{result.summary}</p>
                 </div>
                 <div className="text-right">
-                  <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold text-white ${getRiskBadge(result.overall_risk_score).color}`}>
+                  <Badge 
+                    variant={result.overall_risk_score > 70 ? 'danger' : result.overall_risk_score > 40 ? 'warning' : 'success'}
+                    size="lg"
+                  >
                     {getRiskBadge(result.overall_risk_score).text}
-                  </div>
+                  </Badge>
                 </div>
               </div>
               
-              <div className="flex items-center gap-4">
-                <span className="text-lg font-medium text-gray-700">Overall Risk Score:</span>
-                <div className="flex-1 bg-gray-200 rounded-full h-4 overflow-hidden">
-                  <div
-                    className={`h-full transition-all duration-500 ${
-                      result.overall_risk_score > 70
-                        ? 'bg-red-500'
-                        : result.overall_risk_score > 40
-                        ? 'bg-yellow-500'
-                        : 'bg-green-500'
-                    }`}
-                    style={{ width: `${result.overall_risk_score}%` }}
-                  />
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Tooltip content="Overall risk assessment based on all clauses" position="top">
+                    <span className="text-lg font-medium text-gray-700 cursor-help">
+                      Overall Risk Score
+                    </span>
+                  </Tooltip>
+                  <span className={`text-2xl font-bold px-4 py-2 rounded-lg border-2 ${getRiskColor(result.overall_risk_score)}`}>
+                    {result.overall_risk_score}/100
+                  </span>
                 </div>
-                <span className={`text-2xl font-bold px-4 py-2 rounded-lg border-2 ${getRiskColor(result.overall_risk_score)}`}>
-                  {result.overall_risk_score}/100
-                </span>
+                <ProgressBar 
+                  value={result.overall_risk_score} 
+                  max={100}
+                  color={result.overall_risk_score > 70 ? 'red' : result.overall_risk_score > 40 ? 'yellow' : 'green'}
+                />
               </div>
             </Card>
 
@@ -246,18 +251,25 @@ export default function ContractAnalysis() {
                       <h3 className="font-semibold text-gray-900 text-lg">
                         Clause {index + 1}
                       </h3>
-                      <span
-                        className={`px-4 py-1 rounded-full text-sm font-medium border-2 ${getRiskColor(
-                          clause.risk_score
-                        )}`}
+                      <Badge 
+                        variant={clause.risk_score > 70 ? 'danger' : clause.risk_score > 40 ? 'warning' : 'success'}
                       >
                         Risk: {clause.risk_score}/100
-                      </span>
+                      </Badge>
                     </div>
                     
                     <p className="text-gray-700 text-sm mb-4 bg-gray-50 p-3 rounded border-l-4 border-gray-300">
                       {clause.clause}
                     </p>
+
+                    <div className="mb-3">
+                      <ProgressBar 
+                        value={clause.risk_score} 
+                        max={100}
+                        label="Risk Level"
+                        color={clause.risk_score > 70 ? 'red' : clause.risk_score > 40 ? 'yellow' : 'green'}
+                      />
+                    </div>
 
                     {clause.red_flags.length > 0 && (
                       <div className="mb-4 bg-red-50 p-4 rounded-lg border-l-4 border-red-500">

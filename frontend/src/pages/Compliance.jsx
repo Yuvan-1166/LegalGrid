@@ -3,6 +3,9 @@ import Card from '../components/Card'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ErrorAlert from '../components/ErrorAlert'
 import SuccessAlert from '../components/SuccessAlert'
+import Badge from '../components/Badge'
+import Tooltip from '../components/Tooltip'
+import ProgressBar from '../components/ProgressBar'
 import { checkCompliance } from '../services/api'
 
 export default function Compliance() {

@@ -1,0 +1,56 @@
+{
+  "passed": 5,
+  "failed": 4,
+  "tests": [
+    {
+      "name": "Health Check",
+      "status": "PASS",
+      "duration": 0.006281614303588867,
+      "result": "Health check OK"
+    },
+    {
+      "name": "Contract Analysis",
+      "status": "PASS",
+      "duration": 17.264039039611816,
+      "result": "Risk Score: 53, Clauses: 4"
+    },
+    {
+      "name": "Case Law Search",
+      "status": "FAIL",
+      "error": ""
+    },
+    {
+      "name": "Compliance Check",
+      "status": "FAIL",
+      "error": ""
+    },
+    {
+      "name": "Dispute Mediation",
+      "status": "FAIL",
+      "error": ""
+    },
+    {
+      "name": "Qdrant Search",
+      "status": "PASS",
+      "duration": 0.15451478958129883,
+      "result": "Found 3 documents"
+    },
+    {
+      "name": "Response Time Performance",
+      "status": "PASS",
+      "duration": 0.30188822746276855,
+      "result": "Avg: 0.10s, Max: 0.11s"
+    },
+    {
+      "name": "Cache Effectiveness",
+      "status": "PASS",
+      "duration": 0.1482384204864502,
+      "result": "Speedup: 38.0x (First: 0.144s, Cached: 0.004s)"
+    },
+    {
+      "name": "Input Validation",
+      "status": "FAIL",
+      "error": "Should reject short contract text"
+    }
+  ]
+}

@@ -159,6 +159,46 @@ class HybridRetriever:
         
         return results
     
+    def retrieve_with_reranking(
+        self,
+        query: str,
+        collection: str,
+        jurisdiction: str = "All-India",
+        top_k: int = 5,
+        use_cache: bool = True
+    ) -> List[Dict]:
+        """
+        Retrieve documents with cross-encoder reranking
+        
+        Args:
+            query: Search query
+            collection: Collection to search in
+            jurisdiction: Jurisdiction filter
+            top_k: Number of results to return
+            use_cache: If True, use cached results
+            
+        Returns:
+            Reranked documents
+        """
+        # Get initial results (more than top_k for reranking)
+        initial_results = self.retrieve(
+            query=query,
+            collection=collection,
+            jurisdiction=jurisdiction,
+            top_k=top_k * 3,  # Get 3x for reranking
+            use_hybrid=True,
+            use_cache=use_cache
+        )
+        
+        if not initial_results:
+            return []
+        
+        # Rerank using cross-encoder
+        from app.rag.reranker import reranker
+        reranked_results = reranker.rerank(query, initial_results, top_k)
+        
+        return reranked_results
+    
     def explain_retrieval(self, doc: Dict) -> str:
         """Generate explanation for why document was retrieved"""
         method = doc.get("retrieval_method", "unknown")

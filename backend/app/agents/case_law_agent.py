@@ -129,7 +129,7 @@ class CaseLawAgent:
         relevance_score: float,
         query: str
     ) -> Precedent:
-        """Format case data into Precedent schema"""
+        """Format case data into Precedent schema with citations"""
         metadata = case.get("metadata", {})
         
         # Extract or generate summary
@@ -138,8 +138,10 @@ class CaseLawAgent:
         # Extract holding
         holding = metadata.get("holding", "Holding not available")
         
-        # Generate explanation
+        # Generate explanation with citation
         reason = self._explain_retrieval(case, relevance_score)
+        citation = metadata.get("citation", f"{case.get('title', 'Unknown')} ({metadata.get('year', 'N/A')})")
+        reason_with_citation = f"{reason} Citation: {citation}"
         
         return Precedent(
             title=case.get("title", "Unknown Case"),
@@ -148,7 +150,7 @@ class CaseLawAgent:
             relevance_score=round(relevance_score, 3),
             summary=summary,
             holding=holding,
-            reason_retrieved=reason
+            reason_retrieved=reason_with_citation
         )
     
     def _generate_summary(self, case: Dict, query: str) -> str:

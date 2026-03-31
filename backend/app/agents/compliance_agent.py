@@ -92,16 +92,20 @@ class ComplianceAgent:
         docs: List[Dict],
         org_profile: Dict
     ) -> List[Dict]:
-        """Extract compliance requirements from regulation documents"""
+        """Extract compliance requirements from regulation documents with citations"""
         if not docs:
             return [{
                 "requirement": f"Unable to retrieve details for {regulation}",
                 "applicability": "Unknown",
-                "severity": "low"
+                "severity": "low",
+                "source": "N/A"
             }]
         
-        # Combine document content
-        context = "\n\n".join([doc.get("content", "")[:500] for doc in docs[:2]])
+        # Combine document content with citations
+        context = "\n\n".join([
+            f"[{i+1}] {doc.get('title', 'Unknown')}: {doc.get('content', '')[:500]}"
+            for i, doc in enumerate(docs[:2])
+        ])
         
         prompt = f"""Extract key compliance requirements from this regulation that apply to the organization.
 
@@ -121,7 +125,8 @@ Return a JSON array of requirements in this format:
   "requirement": "Brief description of what must be done",
   "applicability": "Who this applies to",
   "severity": "high/medium/low",
-  "deadline": "When it must be done (if specified)"
+  "deadline": "When it must be done (if specified)",
+  "source": "Citation to source document [1] or [2]"
 }}]
 
 Return only the JSON array, no other text."""

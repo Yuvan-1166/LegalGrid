@@ -33,7 +33,7 @@ class MediationAgent:
         # Step 1: Parse and structure claims
         parsed_claims = self._parse_claims(parties, narrative, claims)
         
-        # Step 2: Retrieve relevant case law and precedents
+        # Step 2: Retrieve relevant case law and precedents with citations
         precedents = self.retriever.retrieve(
             query=narrative,
             collection="cases",
@@ -42,15 +42,19 @@ class MediationAgent:
             use_hybrid=True
         )
         
-        # Convert to RetrievedDocument format
+        # Convert to RetrievedDocument format with citations
         precedent_docs = []
-        for prec in precedents:
+        for i, prec in enumerate(precedents):
+            metadata = prec.get("metadata", {})
+            citation = f"[{i+1}] {prec.get('title', 'Unknown')} ({metadata.get('year', 'N/A')})"
+            metadata["citation"] = citation
+            
             precedent_docs.append(RetrievedDocument(
                 doc_id=prec.get("id", "unknown"),
                 title=prec.get("title", "Unknown Case"),
                 content=prec.get("content", "")[:500],
                 score=prec.get("fusion_score", prec.get("score", 0.5)),
-                metadata=prec.get("metadata", {})
+                metadata=metadata
             ))
         
         # Step 3: Identify common ground and conflicts

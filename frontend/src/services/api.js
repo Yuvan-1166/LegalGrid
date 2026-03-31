@@ -31,6 +31,13 @@ export const analyzeContractFile = async (file, jurisdiction = 'All-India') => {
   return response.data
 }
 
+export const exportContractPDF = async (analysisResult) => {
+  const response = await api.post('/api/v1/contracts/export-pdf', analysisResult, {
+    responseType: 'blob',
+  })
+  return response.data
+}
+
 // Case Law Search
 export const searchCases = async (caseDescription, jurisdiction = 'All-India', topK = 5) => {
   const response = await api.post('/api/v1/cases/search', {

@@ -56,7 +56,7 @@ Return format: {{"clauses": ["clause 1 text", "clause 2 text", ...]}}
     
     def _analyze_clause(self, clause: str, jurisdiction: str) -> ClauseRisk:
         """Analyze individual clause for risks"""
-        # Retrieve relevant laws
+        # Retrieve relevant laws with citations
         relevant_laws = self.retriever.retrieve(
             query=clause,
             collection="statutes",
@@ -64,10 +64,16 @@ Return format: {{"clauses": ["clause 1 text", "clause 2 text", ...]}}
             top_k=3
         )
         
-        # Analyze with LLM
+        # Format citations
+        citations = [
+            f"[{i+1}] {doc['title']} (Score: {doc.get('score', 0):.2f})"
+            for i, doc in enumerate(relevant_laws)
+        ]
+        
+        # Analyze with LLM including citations
         laws_context = "\n".join([
-            f"- {doc['title']}: {doc['content'][:200]}"
-            for doc in relevant_laws
+            f"[{i+1}] {doc['title']}: {doc['content'][:200]}"
+            for i, doc in enumerate(relevant_laws)
         ])
         
         prompt = f"""Analyze this contract clause for legal risks under Indian law.
@@ -75,18 +81,18 @@ Return format: {{"clauses": ["clause 1 text", "clause 2 text", ...]}}
 Clause:
 {clause}
 
-Relevant Laws:
+Relevant Laws (cite using [1], [2], etc.):
 {laws_context}
 
 Provide:
 1. Risk score (0-100, where 0=no risk, 100=high risk)
-2. Red flags (list of specific issues)
-3. Recommendations (list of suggested changes)
+2. Red flags (list of specific issues with citations)
+3. Recommendations (list of suggested changes with legal basis)
 
 Return as JSON: {{
     "risk_score": 0-100,
-    "red_flags": ["flag1", "flag2"],
-    "recommendations": ["rec1", "rec2"]
+    "red_flags": ["flag1 [1]", "flag2 [2]"],
+    "recommendations": ["rec1 based on [1]", "rec2 based on [2]"]
 }}
 """
         response = self.llm.chat([{"role": "user", "content": prompt}], temperature=0.1)

@@ -116,4 +116,34 @@ export const evaluateOutcome = async (outcomeDescription, outcomeRationale, pars
   return response.data
 }
 
+// Chat with AI
+export const chatWithAI = async (message, conversationHistory = []) => {
+  const response = await api.post('/api/v1/chat/message', {
+    message,
+    conversation_history: conversationHistory.slice(-10).map(m => ({
+      role: m.type === 'user' ? 'user' : 'assistant',
+      content: m.content
+    })),
+  })
+  return response.data
+}
+
+export const uploadChatDocument = async (file, query = '') => {
+  const formData = new FormData()
+  formData.append('file', file)
+  if (query) formData.append('query', query)
+  
+  const response = await api.post('/api/v1/chat/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  return response.data
+}
+
+export const getChatSuggestions = async (context) => {
+  const response = await api.post('/api/v1/chat/suggestions', { context })
+  return response.data
+}
+
 export default api

@@ -141,6 +141,23 @@ export default function Home() {
                 Learn more →
               </div>
             </Link>
+
+            <Link to="/chat" className="group bg-white p-8 rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-lg transition lg:col-span-2">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
+                  💬
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">AI Legal Assistant</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Chat with our AI assistant for instant answers to legal questions, document analysis, and personalized guidance. Available 24/7 to help with all your legal needs.
+                  </p>
+                </div>
+              </div>
+              <div className="text-blue-600 font-semibold group-hover:translate-x-1 transition-transform inline-block">
+                Start chatting →
+              </div>
+            </Link>
           </div>
         </div>
       </section>

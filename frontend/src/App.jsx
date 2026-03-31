@@ -4,6 +4,7 @@ import ContractAnalysis from './pages/ContractAnalysis'
 import CaseSearch from './pages/CaseSearch'
 import Compliance from './pages/Compliance'
 import Disputes from './pages/Disputes'
+import Chat from './pages/Chat'
 
 function Navigation() {
   const location = useLocation()
@@ -65,6 +66,16 @@ function Navigation() {
               >
                 Disputes
               </Link>
+              <Link
+                to="/chat"
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                  isActive('/chat')
+                    ? 'bg-slate-100 text-slate-900'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+              >
+                AI Chat
+              </Link>
             </div>
           </div>
           
@@ -94,6 +105,7 @@ function App() {
             <Route path="/cases" element={<CaseSearch />} />
             <Route path="/compliance" element={<Compliance />} />
             <Route path="/disputes" element={<Disputes />} />
+            <Route path="/chat" element={<Chat />} />
           </Routes>
         </main>
       </div>

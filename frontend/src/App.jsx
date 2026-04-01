@@ -17,7 +17,7 @@ function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white border-b border-slate-200 top-0 z-50">
-      <div className="w-full px-6">
+      <div className="w-full px-6 pl-14">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2">

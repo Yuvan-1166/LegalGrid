@@ -578,6 +578,46 @@ VITE_API_URL=http://localhost:8000
 
 ## 🚢 Deployment
 
+### Render Deployment (Recommended)
+
+The easiest way to deploy LegalGrid is using Render's Blueprint feature.
+
+#### Quick Deploy to Render
+
+1. **Prepare for deployment**
+   ```bash
+   cd backend
+   ./deploy_render.sh
+   ```
+
+2. **Push to Git**
+   ```bash
+   git add .
+   git commit -m "Add Render deployment configuration"
+   git push origin main
+   ```
+
+3. **Deploy on Render**
+   - Go to [Render Dashboard](https://dashboard.render.com)
+   - Click "New" → "Blueprint"
+   - Connect your Git repository
+   - Render will detect `render.yaml` and deploy automatically
+   - Add your `GROQ_API_KEY` in the environment variables
+
+4. **Initialize database**
+   ```bash
+   # In Render Shell (Dashboard → Your Service → Shell)
+   python scripts/seed_data.py
+   ```
+
+Your backend will be live at `https://legalgrid-backend.onrender.com`
+
+For detailed deployment instructions, see [backend/RENDER_DEPLOYMENT.md](backend/RENDER_DEPLOYMENT.md)
+
+#### Cost Estimate
+- **Free Tier**: $0/month (with cold starts)
+- **Production**: ~$15/month (always-on instances)
+
 ### Docker Deployment
 
 #### Build Images
@@ -596,9 +636,9 @@ docker build -t legalgrid-frontend .
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
-### Cloud Deployment
+### Alternative Cloud Platforms
 
-#### Backend (Railway/Render)
+#### Backend (Railway/Fly.io)
 1. Connect your GitHub repository
 2. Set environment variables (GROQ_API_KEY)
 3. Deploy from `backend/` directory
@@ -618,14 +658,14 @@ netlify deploy --prod --dir=dist
 
 ### Production Considerations
 
-- Use managed Qdrant service (Qdrant Cloud)
+- Use managed Qdrant service (Qdrant Cloud) or deploy with persistent storage
 - Implement authentication and authorization
 - Add rate limiting and request throttling
 - Set up monitoring and logging (Sentry, LogRocket)
-- Configure CORS properly
+- Configure CORS properly for your frontend domain
 - Use environment-specific configurations
 - Implement CI/CD pipeline
-- Set up SSL/TLS certificates
+- Set up SSL/TLS certificates (automatic with Render)
 - Configure CDN for frontend assets
 
 ## 🧪 Testing

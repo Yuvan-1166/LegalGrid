@@ -8,6 +8,7 @@ class Settings:
     QDRANT_URL: str = os.getenv("QDRANT_URL", "http://localhost:6333")
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
     DEBUG: bool = ENVIRONMENT == "development"
+    PORT: int = int(os.getenv("PORT", "8000"))
     
     # API Settings
     API_V1_PREFIX: str = "/api/v1"
@@ -19,6 +20,8 @@ class Settings:
         "http://localhost:3000",
         "http://localhost:5173",
         "http://localhost:5174",
+        # Add production frontend URL when deployed
+        os.getenv("FRONTEND_URL", ""),
     ]
 
 settings = Settings()

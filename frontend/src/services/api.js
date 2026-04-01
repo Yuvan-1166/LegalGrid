@@ -117,21 +117,19 @@ export const evaluateOutcome = async (outcomeDescription, outcomeRationale, pars
 }
 
 // Chat with AI
-export const chatWithAI = async (message, conversationHistory = []) => {
+export const chatWithAI = async (message, sessionId = null) => {
   const response = await api.post('/api/v1/chat/message', {
     message,
-    conversation_history: conversationHistory.slice(-10).map(m => ({
-      role: m.type === 'user' ? 'user' : 'assistant',
-      content: m.content
-    })),
+    session_id: sessionId,
   })
   return response.data
 }
 
-export const uploadChatDocument = async (file, query = '') => {
+export const uploadChatDocument = async (file, query = '', sessionId = null) => {
   const formData = new FormData()
   formData.append('file', file)
   if (query) formData.append('query', query)
+  if (sessionId) formData.append('session_id', sessionId)
   
   const response = await api.post('/api/v1/chat/upload', formData, {
     headers: {
@@ -141,8 +139,29 @@ export const uploadChatDocument = async (file, query = '') => {
   return response.data
 }
 
-export const getChatSuggestions = async (context) => {
-  const response = await api.post('/api/v1/chat/suggestions', { context })
+// Session Management
+export const listChatSessions = async (limit = 50) => {
+  const response = await api.get('/api/v1/chat/sessions', { params: { limit } })
+  return response.data
+}
+
+export const createChatSession = async (title = null) => {
+  const response = await api.post('/api/v1/chat/sessions', { title })
+  return response.data
+}
+
+export const getChatSession = async (sessionId) => {
+  const response = await api.get(`/api/v1/chat/sessions/${sessionId}`)
+  return response.data
+}
+
+export const deleteChatSession = async (sessionId) => {
+  const response = await api.delete(`/api/v1/chat/sessions/${sessionId}`)
+  return response.data
+}
+
+export const updateSessionTitle = async (sessionId, title) => {
+  const response = await api.patch(`/api/v1/chat/sessions/${sessionId}/title`, { title })
   return response.data
 }
 

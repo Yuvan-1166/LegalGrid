@@ -1,0 +1,23 @@
+{
+  "session_id": "de53eb57-74f8-4312-a56b-1bc96d9cde6d",
+  "title": "New Conversation - Apr 01, 2026",
+  "messages": [
+    {
+      "id": "8c49548b-f664-4746-9847-d125e547435d",
+      "role": "user",
+      "content": "hi",
+      "timestamp": "2026-04-01 11:06:14.797648",
+      "metadata": null
+    },
+    {
+      "id": "ecc04c4a-9e53-4365-850a-e6a5fb9fb6f4",
+      "role": "assistant",
+      "content": "Hello! How can I assist you today with your legal question or concern? Feel free to let me know the details, and I\u2019ll provide you with clear guidance and relevant references to Indian law.",
+      "timestamp": "2026-04-01 11:06:15.459434",
+      "metadata": null
+    }
+  ],
+  "created_at": "2026-04-01 11:06:14.796179",
+  "updated_at": "2026-04-01 11:10:17.867458",
+  "metadata": null
+}

@@ -96,20 +96,29 @@ function Navigation() {
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white">
-        <Navigation />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/contracts" element={<ContractAnalysis />} />
-            <Route path="/cases" element={<CaseSearch />} />
-            <Route path="/compliance" element={<Compliance />} />
-            <Route path="/disputes" element={<Disputes />} />
-            <Route path="/chat" element={<Chat />} />
-          </Routes>
-        </main>
-      </div>
+      <AppContent />
     </Router>
+  )
+}
+
+function AppContent() {
+  const location = useLocation()
+  const isChatPage = location.pathname === '/chat'
+  
+  return (
+    <div className="h-screen flex flex-col bg-white overflow-hidden">
+      <Navigation />
+      <main className={isChatPage ? 'flex-1 overflow-hidden' : 'flex-1 overflow-y-auto'}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contracts" element={<ContractAnalysis />} />
+          <Route path="/cases" element={<CaseSearch />} />
+          <Route path="/compliance" element={<Compliance />} />
+          <Route path="/disputes" element={<Disputes />} />
+          <Route path="/chat" element={<Chat />} />
+        </Routes>
+      </main>
+    </div>
   )
 }
 

@@ -12,12 +12,14 @@ function Navigation() {
   const isActive = (path) => {
     return location.pathname === path
   }
+  
+  const isHomePage = location.pathname === '/'
 
   return (
-    <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6">
+    <nav className="fixed top-0 left-0 w-full bg-white border-b border-slate-200 top-0 z-50">
+      <div className="w-full px-6">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center gap-12">
+          <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2">
               <svg className="w-7 h-7 text-slate-900" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm0 10h7c-.53 4.12-3.28 7.79-7 8.94V12H5V7.3l7-3.89v8.59z"/>
@@ -79,14 +81,16 @@ function Navigation() {
             </div>
           </div>
           
-          <div className="flex items-center gap-3">
-            <Link
-              to="/contracts"
-              className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition"
-            >
-              Get started
-            </Link>
-          </div>
+          {isHomePage && (
+            <div className="flex items-center gap-3">
+              <Link
+                to="/contracts"
+                className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition"
+              >
+                Get started
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>
@@ -103,12 +107,11 @@ function App() {
 
 function AppContent() {
   const location = useLocation()
-  const isChatPage = location.pathname === '/chat'
   
   return (
-    <div className="h-screen flex flex-col bg-white overflow-hidden">
+    <div className="h-screen flex flex-col bg-white pt-16">
       <Navigation />
-      <main className={isChatPage ? 'flex-1 overflow-hidden' : 'flex-1 overflow-y-auto'}>
+      <main className='flex-1 overflow-y-auto'>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contracts" element={<ContractAnalysis />} />

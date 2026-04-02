@@ -102,7 +102,7 @@ export default function ContractAnalysis() {
                 value={contractText}
                 onChange={(e) => setContractText(e.target.value)}
                 placeholder="Paste your contract text here..."
-                className="w-full h-72 p-5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-sm leading-relaxed transition-all"
+                className="w-full text-gray-900 h-72 p-5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-sm leading-relaxed transition-all"
               />
             </div>
           ) : (
@@ -148,7 +148,7 @@ export default function ContractAnalysis() {
               <select
                 value={jurisdiction}
                 onChange={(e) => setJurisdiction(e.target.value)}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white cursor-pointer"
+                className="w-full px-4 text-gray-900 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white cursor-pointer"
               >
                 <option value="All-India">All India</option>
                 <option value="Delhi">Delhi</option>

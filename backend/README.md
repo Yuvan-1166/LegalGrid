@@ -137,6 +137,25 @@ curl -X POST http://localhost:8000/api/v1/contracts/analyze \
 
 ## Next Steps
 
+### Deployment
+
+Ready to deploy? See our comprehensive deployment guides:
+
+- **[DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md)** - Start here! Overview of all options
+- **[RENDER_FREE_DEPLOYMENT.md](RENDER_FREE_DEPLOYMENT.md)** - Deploy for $0/month (no card required)
+- **[RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)** - Production deployment with Blueprint
+- **[DEPLOYMENT_QUICKSTART.md](DEPLOYMENT_QUICKSTART.md)** - Quick comparison of options
+- **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)** - Ensure nothing is missed
+- **[DEPLOYMENT_ARCHITECTURE.md](DEPLOYMENT_ARCHITECTURE.md)** - System architecture diagrams
+
+Quick deploy:
+```bash
+./deploy_render.sh  # Validates your setup
+# Then follow RENDER_FREE_DEPLOYMENT.md or RENDER_DEPLOYMENT.md
+```
+
+### Development
+
 1. Add more legal documents to the corpus (see `INDIAN_LEGAL_DATA_SOURCES.md`)
 2. Implement remaining agents (case law, compliance, mediation)
 3. Add comprehensive tests

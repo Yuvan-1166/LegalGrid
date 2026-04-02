@@ -6,6 +6,7 @@ load_dotenv()
 class Settings:
     GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
     QDRANT_URL: str = os.getenv("QDRANT_URL", "http://localhost:6333")
+    QDRANT_API_KEY: str = os.getenv("QDRANT_API_KEY", "")  # For Qdrant Cloud
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
     DEBUG: bool = ENVIRONMENT == "development"
     PORT: int = int(os.getenv("PORT", "8000"))

@@ -100,7 +100,7 @@ export default function Disputes() {
                     value={party}
                     onChange={(e) => updateParty(index, e.target.value)}
                     placeholder={`Party ${index + 1} name`}
-                    className="flex-1 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                    className="flex-1 text-gray-900 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
                   />
                   {parties.length > 2 && (
                     <button
@@ -132,7 +132,7 @@ export default function Disputes() {
               value={narrative}
               onChange={(e) => setNarrative(e.target.value)}
               placeholder="Describe the dispute in detail... e.g., 'Property dispute between siblings over inherited land...'"
-              className="w-full h-40 p-5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none text-sm leading-relaxed transition-all"
+              className="w-full text-gray-900 h-40 p-5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none text-sm leading-relaxed transition-all"
             />
           </div>
 
@@ -148,7 +148,7 @@ export default function Disputes() {
                     value={claim}
                     onChange={(e) => updateClaim(index, e.target.value)}
                     placeholder={`Claim ${index + 1}`}
-                    className="flex-1 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                    className="flex-1 text-gray-900 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
                   />
                   {claims.length > 1 && (
                     <button
@@ -179,7 +179,7 @@ export default function Disputes() {
             <select
               value={jurisdiction}
               onChange={(e) => setJurisdiction(e.target.value)}
-              className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent appearance-none bg-white cursor-pointer"
+              className="w-full text-gray-900 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent appearance-none bg-white cursor-pointer"
             >
               <option value="All-India">All India</option>
               <option value="Delhi">Delhi</option>

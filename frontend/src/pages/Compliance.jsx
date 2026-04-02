@@ -96,7 +96,7 @@ export default function Compliance() {
                 value={orgProfile.name}
                 onChange={(e) => setOrgProfile({ ...orgProfile, name: e.target.value })}
                 placeholder="e.g., Tech Innovations Pvt Ltd"
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                className="w-full text-gray-900 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
               />
             </div>
 
@@ -107,7 +107,7 @@ export default function Compliance() {
               <select
                 value={orgProfile.type}
                 onChange={(e) => setOrgProfile({ ...orgProfile, type: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white cursor-pointer"
+                className="w-full text-gray-900 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white cursor-pointer"
               >
                 <option value="private_company">Private Company</option>
                 <option value="public_company">Public Company</option>
@@ -125,7 +125,7 @@ export default function Compliance() {
               <select
                 value={orgProfile.industry}
                 onChange={(e) => setOrgProfile({ ...orgProfile, industry: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white cursor-pointer"
+                className="w-full text-gray-900 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white cursor-pointer"
               >
                 <option value="technology">Technology</option>
                 <option value="manufacturing">Manufacturing</option>
@@ -144,7 +144,7 @@ export default function Compliance() {
               <select
                 value={orgProfile.size}
                 onChange={(e) => setOrgProfile({ ...orgProfile, size: e.target.value })}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white cursor-pointer"
+                className="w-full text-gray-900 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white cursor-pointer"
               >
                 <option value="1-50">1-50 employees</option>
                 <option value="50-200">50-200 employees</option>

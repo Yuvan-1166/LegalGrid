@@ -8,7 +8,16 @@ from app.core.config import settings
 class HybridRetriever:
     def __init__(self, qdrant_url: str = None):
         self.qdrant_url = qdrant_url or settings.QDRANT_URL
-        self.client = QdrantClient(url=self.qdrant_url)
+        
+        # Initialize Qdrant client with optional API key for Qdrant Cloud
+        if settings.QDRANT_API_KEY:
+            self.client = QdrantClient(
+                url=self.qdrant_url,
+                api_key=settings.QDRANT_API_KEY
+            )
+        else:
+            self.client = QdrantClient(url=self.qdrant_url)
+        
         self.encoder = SentenceTransformer("all-mpnet-base-v2")
         self.cache: Dict[str, list] = {}
         self.embedding_dim = 768  # all-mpnet-base-v2 dimension

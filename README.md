@@ -578,9 +578,49 @@ VITE_API_URL=http://localhost:8000
 
 ## 🚢 Deployment
 
-### Render Deployment (Recommended)
+### Render Free Tier (No Card Required) ⭐
 
-The easiest way to deploy LegalGrid is using Render's Blueprint feature.
+The easiest way to deploy LegalGrid without any cost or credit card.
+
+#### Quick Deploy (5 minutes)
+
+1. **Get your API keys** (both free, no card required)
+   - GROQ API: [console.groq.com](https://console.groq.com)
+   - Qdrant Cloud: [cloud.qdrant.io](https://cloud.qdrant.io)
+
+2. **Push to Git**
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
+
+3. **Deploy on Render**
+   - Go to [Render Dashboard](https://dashboard.render.com)
+   - Click "New" → "Web Service"
+   - Connect your repository
+   - Root Directory: `backend`
+   - Build: `pip install -r requirements.txt`
+   - Start: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - Add environment variables (GROQ_API_KEY, QDRANT_URL, QDRANT_API_KEY)
+   - Choose **Free** plan
+
+4. **Initialize database**
+   ```bash
+   # In Render Shell
+   python scripts/seed_data.py
+   ```
+
+**Complete guide**: [backend/RENDER_FREE_DEPLOYMENT.md](backend/RENDER_FREE_DEPLOYMENT.md)
+
+#### Cost: $0/month
+- Render Free: 750 hours/month
+- Qdrant Cloud Free: 1GB storage, 100k vectors
+- Note: Services sleep after 15 min inactivity (30-60s cold start)
+
+### Render Paid Deployment (Blueprint)
+
+For production use with always-on instances and no cold starts.
 
 #### Quick Deploy to Render
 
@@ -614,9 +654,11 @@ Your backend will be live at `https://legalgrid-backend.onrender.com`
 
 For detailed deployment instructions, see [backend/RENDER_DEPLOYMENT.md](backend/RENDER_DEPLOYMENT.md)
 
-#### Cost Estimate
-- **Free Tier**: $0/month (with cold starts)
-- **Production**: ~$15/month (always-on instances)
+#### Cost: ~$15/month
+- Backend Starter: $7/month
+- Qdrant Starter: $7/month  
+- Storage (10GB): $1/month
+- Benefits: Always-on, no cold starts, better performance
 
 ### Docker Deployment
 

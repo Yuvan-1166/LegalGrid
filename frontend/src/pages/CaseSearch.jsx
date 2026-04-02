@@ -65,7 +65,7 @@ export default function CaseSearch() {
               value={caseDescription}
               onChange={(e) => setCaseDescription(e.target.value)}
               placeholder="Describe your case or legal issue... e.g., 'Employment contract termination without notice period'"
-              className="w-full h-40 p-5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-sm leading-relaxed transition-all"
+              className="w-full text-gray-900 h-40 p-5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-sm leading-relaxed transition-all"
             />
           </div>
 
@@ -77,7 +77,7 @@ export default function CaseSearch() {
               <select
                 value={jurisdiction}
                 onChange={(e) => setJurisdiction(e.target.value)}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white cursor-pointer"
+                className="w-full text-gray-900 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white cursor-pointer"
               >
                 <option value="All-India">All India</option>
                 <option value="Supreme Court">Supreme Court</option>
@@ -96,7 +96,7 @@ export default function CaseSearch() {
               <select
                 value={topK}
                 onChange={(e) => setTopK(parseInt(e.target.value))}
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white cursor-pointer"
+                className="w-full text-gray-900 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white cursor-pointer"
               >
                 <option value="3">3 precedents</option>
                 <option value="5">5 precedents</option>
